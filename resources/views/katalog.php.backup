@@ -1,0 +1,343 @@
+<?php
+// Daftar nama produk
+$names = [
+  '7AVE Clothes',
+  'Anywhere',
+  'ArCloth',
+  'ArthemizLabs',
+  'BreakerClothes',
+  'ciprek',
+  'Devotion Cloth',
+  'Insphere',
+  'Kacang Sembunyi Warisan Bunda',
+  'Lowbudget Cos',
+  'Mangata',
+  'PolarBoo',
+  'Student Sips Drink',
+  'Sunnyside Production',
+  'Toteen',
+  'Vestzle',
+  'Hanabira Works',
+  'Homefox',
+  'Nusariot',
+  'Pieces of Me',
+  'Ritistic',
+  'Sketch-Mode',
+  'Visual CreatiVerse',
+];
+
+$produk = [];
+for ($i = 0; $i < count($names); $i++) {
+  $display = $names[$i];
+  $id = $i + 1;
+  $thumbWeb = "/assets/image/" . rawurlencode($display) . ".png";
+  $produk[] = [
+    'id' => $id,
+    'nama' => $display,
+    'logo' => $thumbWeb,
+  ];
+}
+
+$highlight = array_slice($produk, 0, 3);
+?>
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Katalog Wirausaha Mahasiswa - Wirausaha Mahasiswa Polimedia</title>
+  <meta name="description" content="Katalog Wirausaha Mahasiswa Polimedia">
+  <meta name="keywords" content="Katalog Wirausaha, Mahasiswa, Polimedia, UMKM">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
+  <!-- Favicons -->
+  <link href="/assets/img/favicon.png" rel="icon">
+  <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="/assets/css/main.css" rel="stylesheet">
+  <style>
+    /* Reset some default styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--default-font, 'Poppins', sans-serif);
+      background: #fff;
+      color: #333;
+      overflow-x: hidden;
+    }
+    
+    /* Ensure header is properly styled */
+    .header {
+      background: rgba(0, 0, 0, 0.8) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    
+    .header .logo .sitename {
+      color: #fff !important;
+      font-family: var(--heading-font, 'Raleway', sans-serif);
+      font-weight: 700;
+      font-size: 24px;
+    }
+    
+    .navmenu ul {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      list-style: none;
+      align-items: center;
+    }
+    
+    .navmenu a {
+      color: #fff;
+      padding: 10px 15px;
+      text-decoration: none;
+      font-family: var(--nav-font, 'Poppins', sans-serif);
+      font-weight: 500;
+      position: relative;
+    }
+    
+    .navmenu a:hover,
+    .navmenu a:focus,
+    .navmenu a.active {
+      color: #fff;
+    }
+    
+    .navmenu a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: #fff;
+      bottom: 0;
+      left: 15px;
+      transition: width 0.3s ease;
+    }
+    
+    .navmenu a:hover::after,
+    .navmenu a:focus::after,
+    .navmenu a.active::after {
+      width: calc(100% - 30px);
+    }
+    
+    /* Adjust hero section to account for fixed header */
+    .hero {
+      padding-top: 80px;
+    }
+
+    /* Hero Section (Full width for 1 product) */
+    .hero {
+      margin-top: 90px;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      background: #fff;
+    }
+    .slides {
+      display: flex;
+      transition: transform 0.8s ease;
+      width: 100%;
+    }
+    .slide {
+      flex: 0 0 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 80px;
+      padding: 60px 80px;
+      box-sizing: border-box;
+    }
+    .slide img {
+      width: 420px;
+      height: 595px;
+      object-fit: cover;
+      background: #aaa;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    }
+    .hero-content {
+      max-width: 500px;
+    }
+    .hero-content h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #000;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+    .hero-content p {
+      font-size: 16px;
+      color: #444;
+      margin-bottom: 25px;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+    .btn {
+      padding: 12px 25px;
+      border-radius: 6px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary { background: #ce4826; color: #fff; }
+    .btn-primary:hover { background: #a6341d; }
+
+    /* Katalog Grid */
+    .container {
+      padding: 60px 60px;
+      max-width: 1400px;
+      margin: auto;
+    }
+    .judul {
+      text-align: center;
+      font-size: 32px;
+      color: #ce4826;
+      margin-bottom: 40px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      justify-items: center;
+    }
+    .card {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #f8f8f8;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      width: 280px;
+    }
+    .card img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      display: block;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+    .card-info {
+      text-align: center;
+      padding: 15px;
+    }
+    .card-info h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #ce4826;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .slide { flex-direction: column; gap: 30px; text-align: center; }
+      .slide img { width: 70%; height: auto; }
+      .hero-content { max-width: 500px; }
+      .grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 768px) {
+      header { padding: 15px; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .hero-content h2 { font-size: 28px; }
+    }
+    @media (max-width: 480px) {
+      .grid { grid-template-columns: 1fr; }
+      .slide { padding: 20px; }
+      .back-btn { font-size: 14px; padding: 8px 14px; }
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #f2f2f2;
+      font-size: 14px;
+      color: #666;
+      margin-top: 25px;
+    }
+  </style>
+</head>
+
+<body class="index-page">
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+      <a href="{{ route('home') }}" class="logo d-flex align-items-center">
+        <h1 class="sitename">Wirausaha Mahasiswa Polimedia</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{{ route('home') }}#hero" class="{{ request()->is('/') ? 'active' : '' }}">Home</a></li>
+          <li><a href="{{ route('home') }}#about">About</a></li>
+          <li><a href="{{ route('home') }}#gallery">Gallery</a></li>
+          <li><a href="{{ route('home') }}#contact">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Highlight -->
+  <section class="hero">
+    <div class="slides" id="slides">
+      <?php foreach ($highlight as $h): ?>
+        <div class="slide">
+          <img src="<?= $h['logo'] ?>" alt="<?= $h['nama'] ?>">
+          <div class="hero-content">
+            <h2><?= strtoupper($h['nama']) ?></h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
+            <a href="<?= route('detail', ['id' => $h['id']]) ?>" class="btn btn-primary">Lihat Detail</a>
+          </div>
+        </div>
+      <?php endforeach; ?>
+    </div>
+  </section>
+
+  <!-- Katalog -->
+  <div class="container">
+    <h2 class="judul">Katalog Wirausaha Mahasiswa</h2>
+    <div class="grid">
+      <?php foreach ($produk as $p): ?>
+        <a href="<?= route('detail', ['id' => $p['id']]) ?>" class="card">
+          <img src="<?= $p['logo'] ?>" alt="<?= $p['nama'] ?>">
+          <div class="card-info">
+            <h3><?= $p['nama'] ?></h3>
+          </div>
+        </a>
+      <?php endforeach; ?>
+    </div>
+  </div>
+
+  <footer>
+    &copy; <?= date('Y') ?> Program Wirausaha Mahasiswa Polimedia
+  </footer>
+
+  <script>
+    let index = 0;
+    const slides = document.getElementById('slides');
+    const total = slides.children.length;
+    setInterval(() => {
+      index = (index + 1) % total;
+      slides.style.transform = `translateX(-${index * 100}vw)`;
+    }, 5000);
+  </script>
+</body>
+</html>
